@@ -30,7 +30,7 @@ static GPtrArray *venvs = NULL;
 
 
 /* ============================================================
- * Utilitaires
+ * Utilities
  * ============================================================ */
 
 static void venv_free(gpointer data)
@@ -349,7 +349,6 @@ static void load_config(GeanyPlugin *plugin)
     }
 }
 
-
 /* ============================================================
  * Exécution dans terminal externe
  * ============================================================ */
@@ -359,14 +358,8 @@ static void execute_venv_path(
 {
     if (!venv_path || !*venv_path)
         return;
-
     gchar *python =
-        g_build_filename(
-            venv_path,
-            "bin",
-            "python",
-            NULL);
-
+        g_build_filename(venv_path, "bin", "python", NULL);
     if (!g_file_test(
             python,
             G_FILE_TEST_IS_EXECUTABLE))
@@ -377,7 +370,7 @@ static void execute_venv_path(
                 GTK_DIALOG_MODAL,
                 GTK_MESSAGE_ERROR,
                 GTK_BUTTONS_CLOSE,
-                "Python introuvable dans le virtualenv :\n%s",
+                "Python was not found in the virtual environment:\n%s",
                 python);
 
         gtk_window_set_title(
@@ -391,8 +384,7 @@ static void execute_venv_path(
         return;
     }
 
-    GeanyDocument *doc =
-        document_get_current();
+    GeanyDocument *doc = document_get_current();
 
     if (!doc || !doc->file_name)
     {
@@ -402,15 +394,12 @@ static void execute_venv_path(
                 GTK_DIALOG_MODAL,
                 GTK_MESSAGE_WARNING,
                 GTK_BUTTONS_CLOSE,
-                "Aucun fichier n'est actuellement ouvert.");
-
+                "No file is currently open.");
         gtk_window_set_title(
             GTK_WINDOW(dialog),
             "Execute Venv");
-
         gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
-
         g_free(python);
         return;
     }
@@ -423,7 +412,7 @@ static void execute_venv_path(
                 GTK_DIALOG_MODAL,
                 GTK_MESSAGE_WARNING,
                 GTK_BUTTONS_CLOSE,
-                "Le fichier courant n'est pas un fichier Python.");
+                "The current file is not a Python file.");
 
         gtk_window_set_title(
             GTK_WINDOW(dialog),
@@ -449,8 +438,8 @@ static void execute_venv_path(
         g_strdup_printf(
             "%s %s; "
             "status=$?; "
-            "printf '\\n\\n=== Execute Venv : fin (code %%d) ===\\n' \"$status\"; "
-            "printf 'Appuyez sur Entrée pour fermer...\\n'; "
+			"printf '\\n\\n=== Execute Venv: finished (exit code %%d) ===\\n' \"$status\"; "
+			"printf 'Press Enter to close...\\n'; "
             "read dummy",
             qpython,
             qscript);
@@ -486,14 +475,14 @@ static void execute_venv_path(
                 GTK_DIALOG_MODAL,
                 GTK_MESSAGE_ERROR,
                 GTK_BUTTONS_CLOSE,
-                "Impossible de lancer le terminal.");
+                "The terminal can't be launched. Check your terminal configuration.");
 
         gtk_message_dialog_format_secondary_text(
             GTK_MESSAGE_DIALOG(dialog),
             "%s",
             error
                 ? error->message
-                : "Erreur inconnue");
+                : "Unexpected error");
 
         gtk_window_set_title(
             GTK_WINDOW(dialog),
@@ -523,14 +512,11 @@ static void venv_menu_activate(
     gpointer user_data)
 {
     (void)item;
-
     execute_venv_path(
         (const gchar *)user_data);
 }
 
-
 static void rebuild_venv_menu(void);
-
 
 static void refresh_activate(
     GtkMenuItem *item,
@@ -541,7 +527,6 @@ static void refresh_activate(
 
     rebuild_venv_menu();
 }
-
 
 /* ============================================================
  * Configuration : sélection d'une ligne
@@ -588,15 +573,15 @@ static void config_add_clicked(
                 GTK_TREE_VIEW(treeview)));
 
     GtkWidget *dialog =
-        gtk_file_chooser_dialog_new(
-            "Choisir un répertoire à scanner",
-            NULL,
-            GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-            "_Annuler",
-            GTK_RESPONSE_CANCEL,
-            "_Sélectionner",
-            GTK_RESPONSE_ACCEPT,
-            NULL);
+		gtk_file_chooser_dialog_new(
+		    "Choose a directory to scan",
+		    NULL,
+		    GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+		    "_Cancel",
+		    GTK_RESPONSE_CANCEL,
+		    "_Select",
+		    GTK_RESPONSE_ACCEPT,
+		    NULL);
 
     if (gtk_dialog_run(GTK_DIALOG(dialog))
         == GTK_RESPONSE_ACCEPT)
@@ -663,27 +648,21 @@ static void config_add_clicked(
     gtk_widget_destroy(dialog);
 }
 
-
 /* ============================================================
  * Supprimer
  * ============================================================ */
-
 static void config_remove_clicked(
     GtkButton *button,
     gpointer user_data)
 {
     (void)button;
-
     GtkWidget *treeview =
         GTK_WIDGET(user_data);
-
     GtkTreeSelection *selection =
         gtk_tree_view_get_selection(
             GTK_TREE_VIEW(treeview));
-
     GtkTreeModel *model = NULL;
     GtkTreeIter iter;
-
     if (!gtk_tree_selection_get_selected(
             selection,
             &model,
@@ -696,7 +675,6 @@ static void config_remove_clicked(
      * IMPORTANT :
      * gtk_list_store_remove() retire uniquement
      * le chemin de notre liste.
-     *
      * Aucun fichier ni répertoire du disque
      * n'est supprimé.
      */
@@ -801,17 +779,14 @@ static void config_ok_clicked(
     rebuild_venv_menu();
 }
 
-
 static void config_cancel_clicked(
     GtkButton *button,
     gpointer user_data)
 {
     (void)button;
 
-    gtk_widget_destroy(
-        GTK_WIDGET(user_data));
+    gtk_widget_destroy(GTK_WIDGET(user_data));
 }
-
 
 /* ============================================================
  * Fenêtre de configuration
@@ -824,7 +799,7 @@ static void show_configuration_dialog(void)
 
     gtk_window_set_title(
         GTK_WINDOW(dialog),
-        "Python Venv — Répertoires");
+        "Python Venv — Directories");
 
     gtk_window_set_default_size(
         GTK_WINDOW(dialog),
@@ -834,22 +809,14 @@ static void show_configuration_dialog(void)
     gtk_window_set_modal(
         GTK_WINDOW(dialog),
         TRUE);
-
-
     GtkWidget *content =
         gtk_dialog_get_content_area(
             GTK_DIALOG(dialog));
-
-
     GtkWidget *label =
-        gtk_label_new(
-            "Répertoires dans lesquels rechercher les virtualenvs :");
-
+        gtk_label_new("Search paths for virtualenvs :");
     gtk_label_set_xalign(
         GTK_LABEL(label),
         0.0);
-
-
     gtk_box_pack_start(
         GTK_BOX(content),
         label,
@@ -857,55 +824,40 @@ static void show_configuration_dialog(void)
         FALSE,
         8);
 
-
     /*
      * Liste des répertoires.
      */
     GtkListStore *store =
-        gtk_list_store_new(
-            1,
-            G_TYPE_STRING);
-
-
+        gtk_list_store_new(1, G_TYPE_STRING);
     GtkWidget *treeview =
         gtk_tree_view_new_with_model(
             GTK_TREE_MODEL(store));
-
     g_object_unref(store);
-
-
     GtkCellRenderer *renderer =
         gtk_cell_renderer_text_new();
-
-
     GtkTreeViewColumn *column =
         gtk_tree_view_column_new_with_attributes(
-            "Répertoire",
+            "Directory",
             renderer,
             "text",
             0,
             NULL);
 
-
     gtk_tree_view_append_column(
         GTK_TREE_VIEW(treeview),
         column);
-
 
     gtk_tree_view_set_headers_visible(
         GTK_TREE_VIEW(treeview),
         TRUE);
 
-
     gtk_tree_view_set_enable_search(
         GTK_TREE_VIEW(treeview),
         FALSE);
 
-
     GtkTreeSelection *selection =
         gtk_tree_view_get_selection(
             GTK_TREE_VIEW(treeview));
-
 
     GtkWidget *scroll =
         gtk_scrolled_window_new(
@@ -917,11 +869,9 @@ static void show_configuration_dialog(void)
         GTK_POLICY_AUTOMATIC,
         GTK_POLICY_AUTOMATIC);
 
-
     gtk_container_add(
         GTK_CONTAINER(scroll),
         treeview);
-
 
     gtk_box_pack_start(
         GTK_BOX(content),
@@ -929,7 +879,6 @@ static void show_configuration_dialog(void)
         TRUE,
         TRUE,
         8);
-
 
     /*
      * Remplir la liste.
@@ -954,7 +903,6 @@ static void show_configuration_dialog(void)
             -1);
     }
 
-
     /*
      * Boutons Ajouter / Supprimer.
      */
@@ -964,18 +912,14 @@ static void show_configuration_dialog(void)
             6);
 
     GtkWidget *add =
-        gtk_button_new_with_label(
-            "Ajouter un répertoire...");
+        gtk_button_new_with_label("Add a directory...");
 
     GtkWidget *remove =
-        gtk_button_new_with_label(
-            "Supprimer");
-
+        gtk_button_new_with_label("Remove from list");
 
     gtk_widget_set_sensitive(
         remove,
         FALSE);
-
 
     gtk_box_pack_start(
         GTK_BOX(actions),
@@ -991,7 +935,6 @@ static void show_configuration_dialog(void)
         FALSE,
         0);
 
-
     gtk_box_pack_start(
         GTK_BOX(content),
         actions,
@@ -999,16 +942,15 @@ static void show_configuration_dialog(void)
         FALSE,
         8);
 
-
     /*
      * Info.
      */
     GtkWidget *info =
         gtk_label_new(
-            "Sélectionnez un répertoire puis cliquez sur "
-            "\"Supprimer\", ou utilisez la touche Suppr.\n"
-            "La suppression retire uniquement le chemin de la "
-            "configuration : le répertoire du disque n'est pas supprimé.");
+            "Select a directory and click "
+            "\"Remove\", or press the Delete key.\n"
+            "Removal only removes the path from the configuration: "
+            "the directory on disk is not deleted.");
 
     gtk_label_set_xalign(
         GTK_LABEL(info),
@@ -1020,7 +962,6 @@ static void show_configuration_dialog(void)
         FALSE,
         FALSE,
         8);
-
 
     /*
      * Boutons de dialogue.
@@ -1034,15 +975,13 @@ static void show_configuration_dialog(void)
         buttons,
         GTK_ALIGN_END);
 
-
     GtkWidget *cancel =
         gtk_button_new_with_label(
-            "Annuler");
+            "Cancel");
 
     GtkWidget *ok =
         gtk_button_new_with_label(
-            "Enregistrer");
-
+            "Save");
 
     gtk_box_pack_start(
         GTK_BOX(buttons),
@@ -1058,14 +997,12 @@ static void show_configuration_dialog(void)
         FALSE,
         0);
 
-
     gtk_box_pack_start(
         GTK_BOX(content),
         buttons,
         FALSE,
         FALSE,
         8);
-
 
     /*
      * Signaux.
@@ -1076,13 +1013,11 @@ static void show_configuration_dialog(void)
         G_CALLBACK(config_add_clicked),
         treeview);
 
-
     g_signal_connect(
         remove,
         "clicked",
         G_CALLBACK(config_remove_clicked),
         treeview);
-
 
     g_signal_connect(
         selection,
@@ -1090,13 +1025,11 @@ static void show_configuration_dialog(void)
         G_CALLBACK(config_selection_changed),
         remove);
 
-
     g_signal_connect(
         treeview,
         "key-press-event",
         G_CALLBACK(config_key_press),
         treeview);
-
 
     g_signal_connect(
         ok,
@@ -1104,19 +1037,16 @@ static void show_configuration_dialog(void)
         G_CALLBACK(config_ok_clicked),
         dialog);
 
-
     g_signal_connect(
         cancel,
         "clicked",
         G_CALLBACK(config_cancel_clicked),
         dialog);
 
-
     g_object_set_data(
         G_OBJECT(dialog),
         "venv-treeview",
         treeview);
-
 
     gtk_widget_show_all(dialog);
 }
@@ -1142,19 +1072,13 @@ static void rebuild_venv_menu(void)
         gtk_widget_destroy(
             GTK_WIDGET(l->data));
     }
-
     g_list_free(children);
-
-
     discover_venvs();
-
-
     if (venvs->len == 0)
     {
         GtkWidget *item =
             gtk_menu_item_new_with_label(
-                "(aucun virtualenv trouvé)");
-
+                "(No virtual environment is configured.)");
         gtk_widget_set_sensitive(
             item,
             FALSE);
@@ -1211,7 +1135,7 @@ static void rebuild_venv_menu(void)
 
     GtkWidget *refresh =
         gtk_menu_item_new_with_label(
-            "Actualiser les venvs");
+            "Refresh venvs");
 
     g_signal_connect(
         refresh,
@@ -1228,7 +1152,7 @@ static void rebuild_venv_menu(void)
 
     GtkWidget *configure =
         gtk_menu_item_new_with_label(
-            "Configurer les répertoires...");
+            "Configure Venv Directories...");
 
     g_signal_connect(
         configure,
@@ -1344,9 +1268,9 @@ static void venv_help(
             GTK_MESSAGE_INFO,
             GTK_BUTTONS_CLOSE,
             "Python Venv\n\n"
-            "Détecte automatiquement les virtualenvs "
-            "et exécute le fichier Python courant "
-            "avec le virtualenv sélectionné.");
+            "Automatically detects virtualenvs "
+            "and executes the current Python file "
+            "using the selected virtualenv.");
 
     gtk_window_set_title(
         GTK_WINDOW(dialog),
@@ -1371,14 +1295,13 @@ void geany_load_module(
         "Python Venv";
 
     plugin->info->description =
-        "Détecte et exécute les fichiers Python "
-        "avec plusieurs virtualenvs.";
+        "Detect and run Python files in virtualenvs.";
 
     plugin->info->version =
         "0.5";
 
     plugin->info->author =
-        "dr";
+        "Didier Rius";
 
     plugin->funcs->init =
         venv_init;
