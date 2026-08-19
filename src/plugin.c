@@ -1,3 +1,10 @@
+/*
+ * Python Venv - Geany plugin
+ *
+ * Copyright (C) 2026 dr
+ *
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 #include <geanyplugin.h>
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
