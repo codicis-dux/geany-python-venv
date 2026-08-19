@@ -1,7 +1,10 @@
-# Geany Python Venv  - Run the current Python file with the right virtual environment — directly from Geany.
+# Geany Python Venv  
+- Run the current Python file with the right virtual environment — directly from Geany.
 
 A lightweight Geany plugin for discovering, selecting and executing Python
 virtual environments directly from Geany.
+**Platform status: **Currently developed and tested on Linux.
+> Windows and macOS are not currently tested.
 
 ## Features
 
