@@ -3,6 +3,7 @@
 
 A lightweight Geany plugin for discovering, selecting and executing Python
 virtual environments directly from Geany.
+
 **Platform status: **Currently developed and tested on Linux.
 > Windows and macOS are not currently tested.
 
