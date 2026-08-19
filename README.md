@@ -1,0 +1,93 @@
+# Geany Python Venv
+
+A lightweight Geany plugin for discovering, selecting and executing Python
+virtual environments directly from Geany.
+
+## Features
+
+- Detect Python virtual environments from configurable directories.
+- Support multiple virtualenvs.
+- Select the virtualenv directly from the Geany menu.
+- Execute the current Python file with the selected virtualenv.
+- Run Python programs in an external terminal.
+- Configure and manage the directories scanned for virtual environments.
+- Add and remove search directories from the plugin configuration.
+
+## How it works
+
+The plugin searches the configured directories for Python virtual
+environments.
+
+Typical virtual environments include:
+
+- `venv`
+- `.venv`
+- Python virtual environments containing `bin/python`
+
+Once detected, the environments are available from the **Execute Venv**
+menu in Geany.
+
+The selected environment is used to execute the currently open Python
+file.
+
+## Configuration
+
+Open the plugin configuration from Geany and configure the directories
+where your Python virtual environments are stored.
+
+For example:
+
+```text
+/home/user/venvs
+/home/user/projects
+/home/user/Documents/python
+The plugin can search these locations and detect available virtual
+environments.
+
+Building
+
+Requirements:
+
+Geany development files
+GTK 3
+GLib
+CMake
+GCC
+
+Build with:
+cmake -S . -B build
+cmake --build build
+The resulting plugin is:
+
+build/geany_plugin.so
+Installation
+
+Copy or link the compiled plugin into the Geany user plugin directory.
+
+For example:
+
+mkdir -p ~/.config/geany/plugins
+
+ln -sf \
+    "$(pwd)/build/geany_plugin.so" \
+    ~/.config/geany/plugins/geany_plugin.so
+
+Restart Geany and enable the plugin from:
+
+Tools → Plugin Manager
+
+Usage
+Open a Python file in Geany.
+Configure the directories containing your virtual environments.
+Select a virtual environment from Execute Venv.
+Execute the current Python file.
+The program runs using the selected virtual environment in an external terminal.
+Status
+
+Early development version.
+
+The plugin is currently developed and tested on Linux with Geany 2.x.
+
+License
+
+GPL-2.0-or-later
