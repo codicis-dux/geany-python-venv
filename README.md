@@ -63,7 +63,7 @@ cmake -S . -B build
 cmake --build build
 The resulting plugin is:
 
-build/geany_plugin.so
+build/python_venv.so
 Installation
 
 Copy or link the compiled plugin into the Geany user plugin directory.
@@ -73,8 +73,8 @@ For example:
 mkdir -p ~/.config/geany/plugins
 
 ln -sf \
-    "$(pwd)/build/geany_plugin.so" \
-    ~/.config/geany/plugins/geany_plugin.so
+    "$(pwd)/build/python_venv.so" \
+    ~/.config/geany/plugins/python_venv.so
 
 Restart Geany and enable the plugin from:
 
