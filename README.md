@@ -47,7 +47,7 @@ For example:
 /home/user/Documents/python
 The plugin can search these locations and detect available virtual
 environments.
-
+```
 Building
 
 Requirements:
