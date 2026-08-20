@@ -93,5 +93,6 @@ Early development version.
 The plugin is currently developed and tested on Linux with Geany 2.x.
 
 License
-![License](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)
 GPL-2.0-or-later
+![License](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)
+
