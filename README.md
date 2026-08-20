@@ -1,6 +1,6 @@
-# Geany Python Venv  (https://img.shields.io/badge/platform-Linux-blue)
+# Geany Python Venv  ![Platform](https://img.shields.io/badge/platform-Linux-blue)
 -   Run the current Python file with the right virtual environment — directly from Geany.
-![Platform]
+
 A lightweight Geany plugin for discovering, selecting and executing Python
 virtual environments directly from Geany.
 
