@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(GeanyPlugin
+project(Python_venv
     VERSION 0.1
     LANGUAGES C
 )
@@ -8,26 +8,26 @@ project(GeanyPlugin
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GEANY REQUIRED geany)
 
-add_library(geany_plugin MODULE
+add_library(python_venv MODULE
     src/plugin.c
 )
 
-target_include_directories(geany_plugin PRIVATE
+target_include_directories(python_venv PRIVATE
     ${GEANY_INCLUDE_DIRS}
 )
 
-target_link_directories(geany_plugin PRIVATE
+target_link_directories(python_venv PRIVATE
     ${GEANY_LIBRARY_DIRS}
 )
 
-target_link_libraries(geany_plugin PRIVATE
+target_link_libraries(python_venv PRIVATE
     ${GEANY_LIBRARIES}
 )
 
-target_compile_options(geany_plugin PRIVATE
+target_compile_options(python_venv PRIVATE
     ${GEANY_CFLAGS_OTHER}
 )
 
-set_target_properties(geany_plugin PROPERTIES
+set_target_properties(python_venv PROPERTIES
     PREFIX ""
 )
