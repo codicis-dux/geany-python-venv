@@ -1,4 +1,4 @@
-# Geany Python Venv  ![Platform](https://img.shields.io/badge/platform-Linux-blue)
+# Geany Python Venv  ![Version](https://img.shields.io/badge/version-0.5-green)![Platform](https://img.shields.io/badge/platform-Linux-blue)
 -   Run the current Python file with the right virtual environment — directly from Geany.
 
 A lightweight Geany plugin for discovering, selecting and executing Python
@@ -93,5 +93,5 @@ Early development version.
 The plugin is currently developed and tested on Linux with Geany 2.x.
 
 License
-
+![License](https://img.shields.io/badge/license-GPL--2.0--or--later-blue)
 GPL-2.0-or-later
