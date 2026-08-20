@@ -69,13 +69,13 @@ Installation
 Copy or link the compiled plugin into the Geany user plugin directory.
 
 For example:
-
+```
 mkdir -p ~/.config/geany/plugins
 
 ln -sf \
     "$(pwd)/build/python_venv.so" \
     ~/.config/geany/plugins/python_venv.so
-
+```
 Restart Geany and enable the plugin from:
 
 Tools → Plugin Manager
